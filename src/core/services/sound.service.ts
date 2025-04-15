@@ -6,6 +6,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 import { CoreAutenticationService } from './auth.service';
+import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 
 @Injectable()
 export class SoundService extends CoreAutenticationService {
