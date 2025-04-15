@@ -1,8 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import { SoundService } from './core/services/sound.service';
 import { ConfigService } from '@nestjs/config';
 //import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 const textToSpeech = require('@google-cloud/text-to-speech');
+import * as fs from 'fs'
+import { Response } from 'express';
+
 @Injectable()
 export class AppService {
   //private client: TextToSpeechClient
@@ -50,10 +53,15 @@ export class AppService {
     audioConfig: {audioEncoding: 'MP3'},
   };
   const [response] = await client.synthesizeSpeech(request as any);
+  // The response's audioContent is binary
+  await fs.promises.writeFile('./output.mp3', response.audioContent, 'binary');
 					
-					// The response's audioContent is binary
-					const audioContent = response.audioContent;
-          console.log(audioContent)
+					
+          
+       
+         
+          
+  
 
   }
 }

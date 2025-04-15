@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
@@ -10,9 +11,12 @@ export class AppController {
     return this.appService.getHello();
   }
   @Get('soun')
-  async sound(){
+  async sound(@Res() res: Response
+  ){
     await this.appService.sounService()
-    console.log(this.appService)
-    return this.appService.sounService()
+    const filePath = './output.mp3';
+
+    return res.sendFile(filePath);
+    
   }
 }
