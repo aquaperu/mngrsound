@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 //import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 const textToSpeech = require('@google-cloud/text-to-speech');
 import * as fs from 'fs'
-import { Response } from 'express';
+import * as path from 'path';
 
 @Injectable()
 export class AppService {
@@ -26,9 +26,6 @@ export class AppService {
   async sounService(){
     const client = new textToSpeech.TextToSpeechClient({
       credentials: {
-        
-      
-      
             type: this.configService.get('TYPE'),
             client_email: this.configService.get('CLIENT_EMAIL'),
             private_key: process.env.PRIVATE_KEY,
@@ -40,21 +37,36 @@ export class AppService {
     });
     
     // The text to synthesize
-  const text = 'hello, world!';
+  const text = 'Hola , Mundo!';
 
   // Construct the request
   const request = {
     input: {text: text},
     // Select the language and SSML voice gender (optional)
     voice: {
-      languageCode: 'en-US', 
-      ssmlGender: 'NEUTRAL'},
+      languageCode: 'es-ES', 
+      ssmlGender: 'Female'},
     // select the type of audio encoding
     audioConfig: {audioEncoding: 'MP3'},
   };
-  const [response] = await client.synthesizeSpeech(request as any);
-  // The response's audioContent is binary
-  await fs.promises.writeFile('./output.mp3', response.audioContent, 'binary');
+  try {
+    const respuesta = async()=>{
+      const [myrespuesta] = await client.synthesizeSpeech(request as any)
+      const filePath = path.join(process.cwd(),'/','dist/src', 'output.mp3');
+      await fs.promises.writeFile(filePath, myrespuesta.audioContent, 'binary'); 
+
+    }
+    await respuesta() 
+    
+    
+    
+
+  } catch (error) {
+    console.error("error",error)
+    
+  };
+    
+  
 					
 					
           
@@ -64,4 +76,11 @@ export class AppService {
   
 
   }
+}
+export const fixPathAudio = (recursoAssets:string)=>{
+   console.log(`Starting directory: ${process.cwd()}`);
+   /*const uno = fs.readdirSync(path.join(process.cwd(),'/','dist/src'))
+   console.log(uno)*/
+   //const dos = fs.readdirSync()
+   return `${path.join(process.cwd(),'/','dist/src',recursoAssets)}`
 }

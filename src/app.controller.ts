@@ -1,6 +1,8 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Response } from 'express';
+import * as fs from 'fs'
+import * as path from 'path';
 
 @Controller()
 export class AppController {
@@ -14,9 +16,17 @@ export class AppController {
   async sound(@Res() res: Response
   ){
     await this.appService.sounService()
-    const filePath = './output.mp3';
+    
+    const filePath = path.join(process.cwd(),'/','dist/src', 'output.mp3');
 
-    return res.sendFile(filePath);
+    try {
+      await fs.promises.access(filePath); // Verifica si el archivo existe
+      res.sendFile(filePath);
+    } catch (error) {
+      throw new NotFoundException(`El archivo output.mp3 no se encontró.`);
+    }
+    
+    
     
   }
 }
