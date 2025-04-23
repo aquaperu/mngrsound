@@ -2,7 +2,7 @@ import { Controller, Get, NotFoundException, Param, Res } from '@nestjs/common';
 import { AppService, fixPathAudio } from './app.service';
 import { Response } from 'express';
 import * as fs from 'fs'
-import * as path from 'path';
+
 
 @Controller()
 export class AppController {

@@ -1,5 +1,4 @@
-import { Injectable, Res } from '@nestjs/common';
-import { SoundService } from './core/services/sound.service';
+import { Injectable} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 //import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 const textToSpeech = require('@google-cloud/text-to-speech');
@@ -33,7 +32,7 @@ export class AppService {
     });
 
     // The text to synthesize
-    const text = ' cortos infantiles gratis, así como mitos, leyendas y poemas.';
+    const text = 'gratis.';
 
     // Construct the request
     const request = {
