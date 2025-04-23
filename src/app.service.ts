@@ -18,7 +18,7 @@ export class AppService {
     return 'Hello World!';
   }
   
-  async sounService() {
+  async sounService(texto:any) {
     const client = new textToSpeech.TextToSpeechClient({
       credentials: {
         type: this.configService.get('TYPE'),
@@ -32,7 +32,8 @@ export class AppService {
     });
 
     // The text to synthesize
-    const text = 'gratis.';
+    const text = texto.body;
+    console.log(text)
 
     // Construct the request
     const request = {
