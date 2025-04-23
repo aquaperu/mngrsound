@@ -33,7 +33,7 @@ export class AppService {
     });
 
     // The text to synthesize
-    const text = 'Hola , Mundo!';
+    const text = ' cortos infantiles gratis, así como mitos, leyendas y poemas.';
 
     // Construct the request
     const request = {
